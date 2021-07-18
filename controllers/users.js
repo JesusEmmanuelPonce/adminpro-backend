@@ -45,3 +45,45 @@ exports.createUser = async(req, res) => {
         });
     }
 };
+
+exports.editUser = async(req, res) => {
+
+    const { _id, email } = req.body;
+
+    try {
+        
+        const isUser = await User.findById( _id );
+
+        if(!isUser){
+            return res.status(404).json({
+                success: false,
+                msg: "user is not register",
+            })
+        }
+
+        const isEmail = await User.findOne({ email })
+
+        if(isEmail){
+            return res.status(400).json({
+                success: false,
+                msg: "Email does not available"
+            })
+        }
+
+        const fields = req.body;
+        delete fields.password;
+        delete fields.google;
+
+        await User.findByIdAndUpdate(_id, fields);
+
+        res.json({
+            succes: true,
+            msg: "user update"
+        });
+        
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+        });
+    }
+};
