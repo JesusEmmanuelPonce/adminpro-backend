@@ -78,9 +78,37 @@ exports.editUser = async(req, res) => {
 
         res.json({
             succes: true,
-            msg: "user update"
+            msg: "User update"
         });
         
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+        });
+    }
+};
+
+exports.deleteUser = async(req, res) => {
+    
+    const { _id } = req.body;
+    
+    try {
+        const isId = await User.findById( _id );
+        
+        if(!isId){
+            return res.status(404).json({
+                success: false,
+                msg: "User does not register"
+            })
+        }
+        
+        await User.findByIdAndDelete( _id );
+
+        res.json({
+            success: true,
+            msg: "User deleted"
+        });
+
     } catch (err) {
         res.status(500).json({
             success: false,

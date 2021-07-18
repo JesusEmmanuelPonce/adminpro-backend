@@ -6,6 +6,7 @@ const {
     getUser,
     createUser,
     editUser,
+    deleteUser,
 } = require("../controllers/users");
 
 const router = Router();
@@ -13,12 +14,12 @@ const router = Router();
 router.get("/", getUser);
 
 router.post("/create",
-    [
-        check("name", "name is required").not().isEmpty(),
-        check("password", "password is required").not().isEmpty(),
-        check("email", "email is required").isEmail(),
-        validationField,
-    ], createUser);
+[
+    check("name", "name is required").not().isEmpty(),
+    check("password", "password is required").not().isEmpty(),
+    check("email", "email is required").isEmail(),
+    validationField,
+], createUser);
 
 router.put("/edit", [
     [
@@ -28,5 +29,7 @@ router.put("/edit", [
         validationField,
     ],
 ], editUser);
+
+router.delete("/delete", deleteUser);
 
 module.exports = router;
