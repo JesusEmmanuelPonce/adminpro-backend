@@ -9,4 +9,6 @@ app.use(cors());
 
 connectionDB();
 
+app.use("/api/users", require("./routes/users"));
+
 app.listen(4000, () => console.log("server ready"));
