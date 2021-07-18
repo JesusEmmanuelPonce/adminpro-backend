@@ -7,6 +7,8 @@ const { connectionDB } = require("./config/db");
 
 app.use(cors());
 
+app.use(express.json());
+
 connectionDB();
 
 app.use("/api/users", require("./routes/users"));
